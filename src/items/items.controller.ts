@@ -7,16 +7,18 @@ export class ItemsController {
     findAll(): string {
         return 'Hey Mhan'
     }
-
     @Get(':id')
-    findById(@Param('id') id): string {
-        return `Item is ${id}`
+    findOne(@Param('id') id: string) {
+        return `${id}`;
     }
 
     @Post()
     create(@Body() createItemDto: createItemDto): string {
-        return `Name:${createItemDto.name} Password:${createItemDto.password}`
+        return `My name is ${createItemDto.name} and password is ${createItemDto.password}`
     }
 
-
+    @Put(":id")
+    update(@Body() updateItemDto: createItemDto, @Param('id') id): string {
+        return `Name:${updateItemDto.name} , Id:${id} Updated!!!!!`
+    }
 }
