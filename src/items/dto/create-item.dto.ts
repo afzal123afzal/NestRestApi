@@ -1,4 +1,5 @@
 export class createItemDto {
     readonly name: string
-    readonly password: string
+    readonly qty: string
+    readonly description: string;
 }

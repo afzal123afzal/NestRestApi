@@ -1,29 +1,32 @@
 import { Controller, Get, Post, Delete, Put, Body, Param, Req, Res } from '@nestjs/common';
 import { createItemDto } from './dto/create-item.dto';
+import { ItemsService } from './items.service';
+import { Item } from './interfaces/items.interfaces';
 @Controller('items')
 export class ItemsController {
+    constructor(private readonly itemService: ItemsService) { }
 
     @Get()
-    findAll(): string {
-        return 'Hey Mhan'
+    findAll(): Promise<Item[]> {
+        return this.itemService.findAll()
     }
     @Get(':id')
-    findOne(@Param('id') id: string): string {
-        return `${id}`
+    findOne(@Param('id') id: string): Promise<Item> {
+        return this.itemService.findById(id)
     }
 
     @Post()
-    create(@Body() createItemDto: createItemDto): string {
-        return `My name is ${createItemDto.name} and password is ${createItemDto.password}`
+    create(@Body() createItemDto: createItemDto): Promise<Item> {
+        return this.itemService.createItem(createItemDto)
     }
 
     @Put(':id')
-    update(@Body() updateItemDto: createItemDto, @Param('id') id): string {
-        return `Updated ${id} Name:${updateItemDto.name}`
+    update(@Body() updateItemDto: createItemDto, @Param('id') id): Promise<Item> {
+        return this.itemService.updateItem(updateItemDto, id)
     }
 
     @Delete(':id')
-    delete(@Param('id') id): string {
-        return `Delete ${id}`
+    delete(@Param('id') id): Promise<Item> {
+        return this.itemService.deleteItem(id)
     }
 }
